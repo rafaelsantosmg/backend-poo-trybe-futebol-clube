@@ -1,4 +1,4 @@
-import { Model, INTEGER, BOOLEAN } from 'sequelize';
+import { Model, INTEGER, BOOLEAN, MACADDR } from 'sequelize';
 import db from '.';
 import Team from './teams';
 
@@ -46,10 +46,10 @@ Matche.init({
   timestamps: false,
 });
 
-Team.belongsTo(Matche, { foreignKey: 'homeTeam', as: 'teamHome' });
-Team.belongsTo(Matche, { foreignKey: 'awayTeam', as: 'teamAway' });
+Matche.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
+Matche.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Matche.hasMany(Team, { foreignKey: 'id', as: 'teamHome' });
-Matche.hasMany(Team, { foreignKey: 'id', as: 'teamAway' });
+Team.hasMany(Matche, { foreignKey: 'homeTeam', as: 'teamHome' });
+Team.hasMany(Matche, { foreignKey: 'awayTeam', as: 'teamAway' });
 
 export default Matche;
