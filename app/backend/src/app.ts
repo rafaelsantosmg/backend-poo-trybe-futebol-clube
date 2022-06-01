@@ -1,7 +1,9 @@
 import * as express from 'express';
+import Routers from './routers/Router';
 
 class App {
   public app: express.Express;
+  public router = new Routers();
 
   constructor() {
     this.app = express();
@@ -17,6 +19,8 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(express.json());
+    this.router.login(this.app);
   }
 
   public start(PORT: string | number):void {
