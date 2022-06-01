@@ -1,15 +1,33 @@
+import { compare } from 'bcrypt';
 import ThrowError from '../utils/throwError';
 import User from '../database/models/users';
 
 export default class LoginService {
-  private _user: object | null;
-  private _throwError = new ThrowError(404, 'User not found');
+  private _erroUser = new ThrowError(401, 'Incorrect email or password');
 
   async login(email: string, password: string): Promise<object | null> {
-    this._user = await User.findOne({
-      where: { email, password }, attributes: { exclude: ['password'] },
+    const user = await User.findOne({
+      where: { email },
     });
-    if (!this._user) throw this._throwError;
-    return this._user;
+    if (!user) throw this._erroUser;
+    const validPassword = await compare(password, user.password);
+    if (!validPassword) throw this._erroUser;
+    const { id, username, role } = user;
+    return {
+      id,
+      username,
+      role,
+      email,
+    };
+  }
+
+  async loginValidate(id: number) {
+    const user = await User.findOne({
+      where: { id },
+    });
+
+    if (!user) throw this._erroUser;
+
+    return user.role;
   }
 }
