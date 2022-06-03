@@ -100,9 +100,7 @@ describe('Testa as rotas de Login', () => {
    
      it('Testa se a validação foi feito com sucesso!', async () => {
        chaiHttpResponse = await chai
-          .request(app).get('/login/validate').set('authorization', mockToken);
-
-          console.log(chaiHttpResponse.body);
+          .request(app).get('/login/validate').set('authorization', mockToken)
        
           expect(chaiHttpResponse.status).to.be.equal(200);
           expect(chaiHttpResponse.body).to.be.equal('admin');
