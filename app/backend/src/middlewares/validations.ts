@@ -3,14 +3,14 @@ import { Schema } from 'joi';
 import User from '../database/models/users';
 import Token from '../utils/token';
 
-interface Users {
+type Users = {
   user: {
-    id?: number;
-    username?: string;
-    role?: string;
-    email?: number;
+    id: number;
+    username: string;
+    role: string;
+    email: number;
   }
-}
+};
 
 export default class Validations {
   private _token = new Token();
@@ -28,16 +28,16 @@ export default class Validations {
     if (!token) {
       return res.status(401).json({ message: 'Token not found' });
     }
-    const user = this._token.decoderToken(token);
-    if (!user) {
+    const users = this._token.decoderToken(token);
+    if (!users) {
       return res.status(401).json({ message: 'Invalid token' });
     }
-    const { id } = (user as Users).user;
-    const finduser = await User.findOne({ where: { id } });
+    const { user } = users as Users;
+    const finduser = await User.findOne({ where: { id: user.id } });
     if (!finduser) {
       return res.status(404).json({ message: 'User not found' });
     }
-    req.body = user;
+    req.body = { user };
     next();
   };
 }
