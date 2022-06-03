@@ -23,11 +23,11 @@ export default class LoginService {
 
   async loginValidate(id: number) {
     const user = await User.findOne({
-      where: { id },
+      where: { id }, attributes: { exclude: ['password'] },
     });
 
     if (!user) throw this._erroUser;
 
-    return user.role;
+    return user;
   }
 }
