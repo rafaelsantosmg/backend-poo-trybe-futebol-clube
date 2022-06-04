@@ -2,11 +2,13 @@ import { Application } from 'express';
 import JoiSchemas from '../schemas/joiSchemas';
 import LoginControler from '../controllers/Login';
 import TeamsControler from '../controllers/Teams';
+import MatchesController from '../controllers/Matches';
 import Validations from '../middlewares/validations';
 
 export default class Routers {
   private _loginControler = new LoginControler();
   private _teamsController = new TeamsControler();
+  private _matchesController = new MatchesController();
   private _validations = new Validations();
   private _joiSchemas = new JoiSchemas();
 
@@ -32,6 +34,13 @@ export default class Routers {
     app.get(
       '/teams',
       (req, res) => this._teamsController.getAll(req, res),
+    );
+  }
+
+  public matches(app:Application): void {
+    app.get(
+      '/matches',
+      (req, res) => this._matchesController.getAll(req, res),
     );
   }
 }
