@@ -11,7 +11,7 @@ export default class JoiSchemas {
   });
 
   login = Joi.object({
-    email: Joi.string().required().messages({
+    email: Joi.string().email().required().messages({
       'any.required': ANY_REQUIRED,
       'string.empty': ANY_REQUIRED,
     }),
