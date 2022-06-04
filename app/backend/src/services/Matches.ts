@@ -3,7 +3,6 @@ import Team from '../database/models/teams';
 
 export default class MatcheService {
   private _matches: Matches[];
-  private _matche: Matches | null;
 
   async getAll(inProgress: boolean) {
     if (inProgress) {
@@ -23,10 +22,5 @@ export default class MatcheService {
       ],
     });
     return this._matches;
-  }
-
-  async getSearch(query: string) {
-    this._matche = await Matches.findOne({ where: { inProgress: query } });
-    return this._matche;
   }
 }
