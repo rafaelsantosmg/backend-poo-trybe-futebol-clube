@@ -2,10 +2,12 @@ import { Request, Response } from 'express';
 import Token from '../utils/token';
 import LoginService from '../services/Login';
 import ThrowError from '../utils/throwError';
+import { TUserModel } from '../types/TUser';
 
-export default class LoginControler {
+export default class LoginController {
   public loginService = new LoginService();
   private _token = new Token();
+  private _user: TUserModel ;
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
@@ -20,10 +22,9 @@ export default class LoginControler {
   }
 
   async loginValidate(req: Request, res: Response) {
-    const { id } = req.body.user;
+    this._user = req.body;
     try {
-      const typeUser = await this.loginService.loginValidate(id);
-      return res.status(200).json(typeUser);
+      return res.status(200).json(this._user.role);
     } catch (error) {
       const { status, message } = error as ThrowError;
       return res.status(status).json({ message });
