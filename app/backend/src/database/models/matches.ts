@@ -1,4 +1,4 @@
-import { Model, INTEGER, BOOLEAN, MACADDR } from 'sequelize';
+import { Model, INTEGER, BOOLEAN } from 'sequelize';
 import db from '.';
 import Team from './teams';
 

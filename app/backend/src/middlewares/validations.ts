@@ -1,18 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { Schema } from 'joi';
-import User from '../database/models/users';
+import LoginService from '../services/Login';
 import Token from '../utils/token';
-
-type Users = {
-  user: {
-    id: number;
-    username: string;
-    role: string;
-    email: number;
-  }
-};
+import { TUserValidate } from '../types/TUser';
 
 export default class Validations {
+  private _loginService = new LoginService();
   private _token = new Token();
 
   joi = (req: Request, res: Response, next: NextFunction, schemas: Schema) => {
@@ -32,12 +25,12 @@ export default class Validations {
     if (!users) {
       return res.status(401).json({ message: 'Invalid token' });
     }
-    const { user } = users as Users;
-    const finduser = await User.findOne({ where: { id: user.id } });
+    const { user } = users as TUserValidate;
+    const finduser = await this._loginService.loginValidate(user.id);
     if (!finduser) {
       return res.status(404).json({ message: 'User not found' });
     }
-    req.body = { user };
+    req.body = finduser;
     next();
   };
 }
