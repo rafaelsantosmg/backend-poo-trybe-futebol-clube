@@ -42,5 +42,11 @@ export default class Routers {
       '/matches',
       (req, res) => this._matchesController.getAll(req, res),
     );
+    app.post(
+      '/matches',
+      (req, res, next) => this._validations.auth(req, res, next),
+      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.createMatche),
+      (req, res) => this._matchesController.create(req, res),
+    );
   }
 }
