@@ -147,4 +147,25 @@ describe('Testa as rotas de Matches', () => {
           expect(chaiHttpResponse.body).have.property('message');
       });
     });
+
+    describe('Testa se atualiza um matche com sucesso', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "update")
+          .resolves();
+      });
+    
+      after(()=>{
+        (Matches.update as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se foi possivel atualizar um matche!', async () => {
+        chaiHttpResponse = await chai.request(app)
+          .patch('/matches/1/finish')
+        
+          expect(chaiHttpResponse.status).to.be.equal(200);
+          expect(chaiHttpResponse.body).have.property('message');
+          expect(chaiHttpResponse.body.message).to.be.equal('Finished');
+      });
+    });
 });
