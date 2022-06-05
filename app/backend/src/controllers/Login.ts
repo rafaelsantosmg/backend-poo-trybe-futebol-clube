@@ -22,7 +22,7 @@ export default class LoginController {
   }
 
   async loginValidate(req: Request, res: Response) {
-    this._user = req.body;
+    this._user = req.body.user;
     try {
       return res.status(200).json(this._user.role);
     } catch (error) {
