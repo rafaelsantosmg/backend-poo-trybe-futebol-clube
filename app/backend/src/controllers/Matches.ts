@@ -15,9 +15,19 @@ export default class MatchesController {
 
   async create(req: Request, res: Response) {
     try {
-      console.log('Controller', req.body);
       const matche = await this._matcheService.create(req.body);
       return res.status(201).json(matche);
+    } catch (error) {
+      const { status, message } = error as ThrowError;
+      return res.status(status).json({ message });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      await this._matcheService.update(id);
+      return res.status(200).json({ message: 'Finished' });
     } catch (error) {
       const { status, message } = error as ThrowError;
       return res.status(status).json({ message });
