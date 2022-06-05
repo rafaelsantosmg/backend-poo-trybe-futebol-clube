@@ -6,7 +6,7 @@ import { TMatche } from '../types/TMatche';
 export default class MatcheService {
   private _matches: Matches[];
   private _matche: Matches;
-  private _errorThrow = new ThrowError(401, 'Progress invalid');
+  private _errorThrow = new ThrowError(401, 'inProgress invalid');
 
   async getAll(inProgress: boolean) {
     this._matches = await Matches.findAll({
@@ -24,5 +24,14 @@ export default class MatcheService {
     if (inProgress === false) throw this._errorThrow;
     this._matche = await Matches.create(matche);
     return this._matche;
+  }
+
+  async update(id: string) {
+    const findMatche = await Matches.findOne({ where: { id } });
+    if (!findMatche) throw this._errorThrow;
+    await Matches.update(
+      { inProgress: false },
+      { where: { id } },
+    );
   }
 }
