@@ -6,7 +6,9 @@ import { describe, it, before, after } from 'mocha';
 
 import { app } from '../app';
 import Matches from '../database/models/matches';
-import { mockMatches, mockInProgressTrue, mockInProgressFalse } from './mocks/matches';
+import { mockMatches, mockInProgressTrue, mockInProgressFalse,
+  mockCreateMatche } from './mocks/matches';
+import { mockToken } from './mocks/login';
 
 import { Response } from 'superagent';
 
@@ -87,6 +89,62 @@ describe('Testa as rotas de Matches', () => {
             expect(chaiHttpResponse.body[index]).have.property('inProgress');
             expect(chaiHttpResponse.body[index].inProgress).to.deep.equal(true);
           });
+      });
+    });
+
+    describe('Testa se cria um matche com sucesso', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "create")
+          .resolves( mockCreateMatche as Matches);
+      });
+    
+      after(()=>{
+        (Matches.create as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se matche foi criado corretamente!', async () => {
+        chaiHttpResponse = await chai.request(app)
+          .post('/matches')
+          .set('authorization', mockToken)
+          .send({
+            "homeTeam": 16,
+            "awayTeam": 8,
+            "homeTeamGoals": 2,
+            "awayTeamGoals": 2,
+            "inProgress": true,
+        })
+
+          expect(chaiHttpResponse.status).to.be.equal(201);
+          expect(chaiHttpResponse.body).to.deep.equal(mockCreateMatche);
+      });
+    });
+
+    describe('Testa se não cria um matche com sucesso', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "create")
+          .resolves( mockCreateMatche as Matches);
+      });
+    
+      after(()=>{
+        (Matches.create as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se deu falaha na cração do match!', async () => {
+        chaiHttpResponse = await chai.request(app)
+          .post('/matches')
+          .set('authorization', mockToken)
+          .send({
+            "homeTeam": 16,
+            "awayTeam": 8,
+            "homeTeamGoals": 2,
+            "awayTeamGoals": 2,
+            "inProgress": false,
+        })
+        
+          expect(chaiHttpResponse.status).to.be.equal(401);
+          expect(chaiHttpResponse.body).have.property('message');
       });
     });
 });

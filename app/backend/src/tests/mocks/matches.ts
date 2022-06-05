@@ -89,4 +89,13 @@ export const mockInProgressFalse = [
         "teamName": "Real Brasília"
     }
   },
-]
+];
+
+export const mockCreateMatche = {
+    "id": 1,
+    "homeTeam": 16,
+    "awayTeam": 8,
+    "homeTeamGoals": 2,
+    "awayTeamGoals": 2,
+    "inProgress": true
+}
