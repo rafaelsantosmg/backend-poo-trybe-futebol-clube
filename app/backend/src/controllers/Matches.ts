@@ -23,10 +23,22 @@ export default class MatchesController {
     }
   }
 
-  async update(req: Request, res: Response) {
+  async finish(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      await this._matcheService.update(id);
+      await this._matcheService.finish(id);
+      return res.status(200).json({ message: 'Finished' });
+    } catch (error) {
+      const { status, message } = error as ThrowError;
+      return res.status(status).json({ message });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    try {
+      await this._matcheService.update(id, homeTeamGoals, awayTeamGoals);
       return res.status(200).json({ message: 'Finished' });
     } catch (error) {
       const { status, message } = error as ThrowError;

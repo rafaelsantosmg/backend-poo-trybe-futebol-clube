@@ -26,11 +26,20 @@ export default class MatcheService {
     return this._matche;
   }
 
-  async update(id: string) {
+  async finish(id: string) {
     const findMatche = await Matches.findOne({ where: { id } });
     if (!findMatche) throw this._errorThrow;
     await Matches.update(
       { inProgress: false },
+      { where: { id } },
+    );
+  }
+
+  async update(id: string, homeTeamGoals: number, awayTeamGoals: number) {
+    const findMatche = await Matches.findOne({ where: { id } });
+    if (!findMatche) throw this._errorThrow;
+    await Matches.update(
+      { homeTeamGoals, awayTeamGoals },
       { where: { id } },
     );
   }

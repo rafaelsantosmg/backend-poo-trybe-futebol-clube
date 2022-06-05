@@ -116,7 +116,12 @@ describe('Testa as rotas de Matches', () => {
         })
 
           expect(chaiHttpResponse.status).to.be.equal(201);
-          expect(chaiHttpResponse.body).to.deep.equal(mockCreateMatche);
+          expect(chaiHttpResponse.body).to.property('id');
+          expect(chaiHttpResponse.body).to.property('homeTeam');
+          expect(chaiHttpResponse.body).to.property('awayTeam');
+          expect(chaiHttpResponse.body).to.property('homeTeamGoals');
+          expect(chaiHttpResponse.body).to.property('awayTeamGoals');
+          expect(chaiHttpResponse.body).to.property('inProgress');
       });
     });
 
@@ -162,6 +167,27 @@ describe('Testa as rotas de Matches', () => {
       it('Testa se foi possivel atualizar um matche!', async () => {
         chaiHttpResponse = await chai.request(app)
           .patch('/matches/1/finish')
+        
+          expect(chaiHttpResponse.status).to.be.equal(200);
+          expect(chaiHttpResponse.body).have.property('message');
+          expect(chaiHttpResponse.body.message).to.be.equal('Finished');
+      });
+    });
+
+    describe('Testa se atualiza um matche com sucesso', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "update")
+          .resolves();
+      });
+    
+      after(()=>{
+        (Matches.update as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se foi possivel atualizar um matche!', async () => {
+        chaiHttpResponse = await chai.request(app)
+          .patch('/matches/1')
         
           expect(chaiHttpResponse.status).to.be.equal(200);
           expect(chaiHttpResponse.body).have.property('message');

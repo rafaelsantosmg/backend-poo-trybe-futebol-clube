@@ -21,12 +21,12 @@ export default class JoiSchemas {
     }),
   });
 
-  createMatche = Joi.object({
+  matches = Joi.object({
     user: Joi.object(),
-    homeTeam: Joi.number().min(1).required(),
-    awayTeam: Joi.number().min(1).required(),
-    homeTeamGoals: Joi.number().min(1).required(),
-    awayTeamGoals: Joi.number().min(1).required(),
-    inProgress: Joi.boolean().required(),
+    homeTeam: Joi.number().min(1),
+    awayTeam: Joi.number().min(1),
+    homeTeamGoals: Joi.number().min(1),
+    awayTeamGoals: Joi.number().min(1),
+    inProgress: Joi.boolean(),
   });
 }

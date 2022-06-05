@@ -40,17 +40,19 @@ export default class Routers {
   public matches(app:Application): void {
     app.patch(
       '/matches/:id/finish',
+      (req, res) => this._matchesController.finish(req, res),
+    );
+    app.patch(
+      '/matches/:id',
+      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.matches),
       (req, res) => this._matchesController.update(req, res),
     );
-    app.get(
-      '/matches',
-      (req, res) => this._matchesController.getAll(req, res),
-    );
+    app.get('/matches', (req, res) => this._matchesController.getAll(req, res));
     app.post(
       '/matches',
       (req, res, next) => this._validations.auth(req, res, next),
       (req, res, next) => this._validations.validateTeams(req, res, next),
-      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.createMatche),
+      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.matches),
       (req, res) => this._matchesController.create(req, res),
     );
   }
