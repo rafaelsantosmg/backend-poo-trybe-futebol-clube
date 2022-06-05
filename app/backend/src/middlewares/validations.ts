@@ -9,6 +9,7 @@ export default class Validations {
   private _token = new Token();
 
   joi = (req: Request, res: Response, next: NextFunction, schemas: Schema) => {
+    console.log('Joi', req.body);
     const { error } = schemas.validate(req.body);
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
@@ -30,7 +31,7 @@ export default class Validations {
     if (!finduser) {
       return res.status(404).json({ message: 'User not found' });
     }
-    req.body = finduser;
+    req.body.user = finduser;
     next();
   };
 }
