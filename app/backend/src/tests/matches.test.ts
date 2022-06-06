@@ -187,7 +187,10 @@ describe('Testa as rotas de Matches', () => {
     
       it('Testa se foi possivel atualizar um matche!', async () => {
         chaiHttpResponse = await chai.request(app)
-          .patch('/matches/1')
+          .patch('/matches/1').send({
+            homeTeamGoals: 3,
+            awayTeamGoals: 1
+          })
         
           expect(chaiHttpResponse.status).to.be.equal(200);
           expect(chaiHttpResponse.body).have.property('message');

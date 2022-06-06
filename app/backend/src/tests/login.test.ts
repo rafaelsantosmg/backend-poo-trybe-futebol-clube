@@ -91,26 +91,20 @@ describe('Testa as rotas de Login', () => {
      before(async () => {
        sinon
          .stub(User, "findOne")
-         .resolves( mockLogin as User);
+         .resolves(mockLogin as User);
      });
    
      after(()=>{
        (User.findOne as sinon.SinonStub).restore();
      })
    
-     it('Testa se a validação foi feito com sucesso!', async () => {
-       chaiHttpResponse = await chai
+      it('Testa se a validação foi feito com sucesso!', async () => {
+        chaiHttpResponse = await chai
           .request(app).get('/login/validate').set('authorization', mockToken)
-            .send({
-              "homeTeam": 16,
-              "awayTeam": 8,
-              "homeTeamGoals": 2,
-              "awayTeamGoals": 2,
-              "inProgress": true,
-          })
-          expect(chaiHttpResponse.status).to.be.equal(200);
-          expect(chaiHttpResponse.body).to.be.equal('admin');
-        });
+
+        expect(chaiHttpResponse.status).to.be.equal(200);
+        expect(chaiHttpResponse.body).to.be.equal('admin');
+      });
     });
   });
 });
