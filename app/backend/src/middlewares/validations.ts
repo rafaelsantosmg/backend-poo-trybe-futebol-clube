@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { Schema } from 'joi';
+import { TUserValidate } from '../types/TUser';
+import Team from '../database/models/teams';
 import LoginService from '../services/Login';
 import TeamService from '../services/Teams';
 import Token from '../utils/token';
-import { TUserValidate } from '../types/TUser';
-import Team from '../database/models/teams';
 
 export default class Validations {
   private _loginService = new LoginService();
@@ -43,6 +43,7 @@ export default class Validations {
       return res.status(401)
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
+    console.log(req.body.homeTeam);
     const homeTeam: boolean = teams.some((team) => req.body.homeTeam === team.id);
     const awayTeam: boolean = teams.some((team) => req.body.awayTeam === team.id);
     if (homeTeam === false || awayTeam === false) {

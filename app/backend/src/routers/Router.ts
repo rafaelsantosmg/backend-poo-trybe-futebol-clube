@@ -4,7 +4,7 @@ import LoginControler from '../controllers/Login';
 import TeamsControler from '../controllers/Teams';
 import MatchesController from '../controllers/Matches';
 import Validations from '../middlewares/validations';
-import LeaderBoardController from '../controllers/leaderboard';
+import LeaderBoardController from '../controllers/LeaderBoard';
 
 export default class Routers {
   private _loginControler = new LoginControler();
