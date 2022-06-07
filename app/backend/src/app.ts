@@ -23,6 +23,7 @@ class App {
     this.router.login(this.app);
     this.router.teams(this.app);
     this.router.matches(this.app);
+    this.router.leaderboard(this.app);
   }
 
   public start(PORT: string | number):void {
