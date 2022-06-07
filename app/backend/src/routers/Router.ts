@@ -4,10 +4,13 @@ import LoginControler from '../controllers/Login';
 import TeamsControler from '../controllers/Teams';
 import MatchesController from '../controllers/Matches';
 import Validations from '../middlewares/validations';
+import LeaderBoardController from '../controllers/leaderboard';
 
 export default class Routers {
   private _loginControler = new LoginControler();
   private _teamsController = new TeamsControler();
+  private _leaderBoardController = new LeaderBoardController();
+
   private _matchesController = new MatchesController();
   private _validations = new Validations();
   private _joiSchemas = new JoiSchemas();
@@ -54,6 +57,13 @@ export default class Routers {
       (req, res, next) => this._validations.validateTeams(req, res, next),
       (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.matches),
       (req, res) => this._matchesController.create(req, res),
+    );
+  }
+
+  public leaderboard(app: Application): void {
+    app.get(
+      '/leaderboard/home',
+      (req, res) => this._leaderBoardController.getAll(req, res),
     );
   }
 }
