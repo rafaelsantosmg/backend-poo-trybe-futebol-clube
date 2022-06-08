@@ -8,9 +8,9 @@ export default class MatcheService {
   private _matche: Matches;
   private _errorThrow = new ThrowError(401, 'inProgress invalid');
 
-  async getAll(inProgress: boolean) {
+  async getAll(inProgress: string) {
     this._matches = await Matches.findAll({
-      where: inProgress ? { inProgress } : {},
+      where: inProgress ? { inProgress: inProgress === 'true' } : {},
       include: [
         { model: Team, as: 'teamHome', attributes: { exclude: ['id'] } },
         { model: Team, as: 'teamAway', attributes: { exclude: ['id'] } },

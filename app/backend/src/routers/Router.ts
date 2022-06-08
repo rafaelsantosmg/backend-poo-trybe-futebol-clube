@@ -63,7 +63,11 @@ export default class Routers {
   public leaderboard(app: Application): void {
     app.get(
       '/leaderboard/home',
-      (req, res) => this._leaderBoardController.getAll(req, res),
+      (req, res) => this._leaderBoardController.getHome(req, res),
+    );
+    app.get(
+      '/leaderboard/away',
+      (req, res) => this._leaderBoardController.getAway(req, res),
     );
   }
 }
