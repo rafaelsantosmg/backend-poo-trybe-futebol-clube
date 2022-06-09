@@ -3,7 +3,6 @@ import LeaderBoardHomeService from './LeaderBoardHome';
 import LeaderBoardAwayService from './LeaderBoardAway';
 
 export default class LeaderBoardService {
-  private _leader: TReturnMatche;
   private _leaderBoard: TReturnMatche[];
   private _returnLeaderBoard: TReturnMatche[];
   private _leaderBoardHome = new LeaderBoardHomeService();
@@ -22,8 +21,7 @@ export default class LeaderBoardService {
 
   private getTeamsMatches(leaderBoardHome: TReturnMatche[], leaderBoardAway: TReturnMatche[]) {
     this._leaderBoard = leaderBoardHome.map((home: TReturnMatche) => leaderBoardAway
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .reduce((acc: any, away: TReturnMatche) => {
+      .reduce((acc: TReturnMatche, away: TReturnMatche) => {
         if (home.name === away.name) {
           acc.name = home.name;
           acc.totalPoints = home.totalPoints + away.totalPoints;
@@ -38,7 +36,7 @@ export default class LeaderBoardService {
             / (acc.totalGames * 3)) * 100).toFixed(2));
         }
         return acc;
-      }, {}));
+      }, {} as TReturnMatche));
     return this._leaderBoard;
   }
 

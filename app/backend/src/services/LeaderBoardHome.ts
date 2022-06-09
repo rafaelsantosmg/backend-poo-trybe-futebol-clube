@@ -33,19 +33,11 @@ export default class LeaderBoardHomeService {
     return acc;
   }, 0);
 
-  private getGoalsFavor = (matches: TMatche[]):number => matches.reduce((acc, matche) => {
-    if (matche.homeTeamGoals > 0) {
-      return acc + matche.homeTeamGoals;
-    }
-    return acc;
-  }, 0);
+  private getGoalsFavor = (matches: TMatche[]):number => matches
+    .reduce((acc, matche) => acc + matche.homeTeamGoals, 0);
 
-  private getGoalsOwn = (matches: TMatche[]):number => matches.reduce((acc, matche) => {
-    if (matche.awayTeamGoals > 0) {
-      return acc + matche.awayTeamGoals;
-    }
-    return acc;
-  }, 0);
+  private getGoalsOwn = (matches: TMatche[]):number => matches
+    .reduce((acc, matche) => acc + matche.awayTeamGoals, 0);
 
   private getTotalPoints(matches: TMatche[]):number {
     return this.getTeamWinner(matches as TMatche[]) * 3
