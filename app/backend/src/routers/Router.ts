@@ -9,9 +9,8 @@ import LeaderBoardController from '../controllers/LeaderBoard';
 export default class Routers {
   private _loginControler = new LoginControler();
   private _teamsController = new TeamsControler();
-  private _leaderBoardController = new LeaderBoardController();
-
   private _matchesController = new MatchesController();
+  private _leaderBoardController = new LeaderBoardController();
   private _validations = new Validations();
   private _joiSchemas = new JoiSchemas();
 
@@ -68,6 +67,10 @@ export default class Routers {
     app.get(
       '/leaderboard/away',
       (req, res) => this._leaderBoardController.getAway(req, res),
+    );
+    app.get(
+      '/leaderboard',
+      (req, res) => this._leaderBoardController.getLeaderBoard(req, res),
     );
   }
 }

@@ -36,8 +36,78 @@ describe('Testa as rotas de LeaderBoard', () => {
         (Team.findAll as sinon.SinonStub).restore();
       })
     
-      it('Testa se matches contem todas as proprioedades!', async () => {
+      it('Testa se leaderboard contem todas as proprioedades!', async () => {
         chaiHttpResponse = await chai.request(app).get('/leaderboard/home')
+          mockLeaderBoard.forEach((_m, index) => {
+            expect(chaiHttpResponse.status).to.be.equal(200);
+            expect(chaiHttpResponse.body[index]).have.property('name');
+            expect(chaiHttpResponse.body[index]).have.property('totalPoints');
+            expect(chaiHttpResponse.body[index]).have.property('totalGames');
+            expect(chaiHttpResponse.body[index]).have.property('totalVictories');
+            expect(chaiHttpResponse.body[index]).have.property('totalDraws');
+            expect(chaiHttpResponse.body[index]).have.property('totalLosses');
+            expect(chaiHttpResponse.body[index]).have.property('goalsFavor');
+            expect(chaiHttpResponse.body[index]).have.property('goalsOwn');
+            expect(chaiHttpResponse.body[index]).have.property('goalsBalance');
+            expect(chaiHttpResponse.body[index]).have.property('efficiency');
+          });
+      });
+    });
+  });
+
+  describe('Testa a requisição da rota "/leaderboard/away"', () => {
+    describe('Testa se a requisição de LeaderBoard retorna a classificação dos times da casa', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "findAll")
+          .resolves(mockMatches as unknown as Matches[]);
+        sinon
+          .stub(Team, 'findAll')
+          .resolves(mockTeams as unknown as Team[])
+      });
+    
+      after(()=>{
+        (Matches.findAll as sinon.SinonStub).restore();
+        (Team.findAll as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se leaderboard contem todas as proprioedades!', async () => {
+        chaiHttpResponse = await chai.request(app).get('/leaderboard/away')
+          mockLeaderBoard.forEach((_m, index) => {
+            expect(chaiHttpResponse.status).to.be.equal(200);
+            expect(chaiHttpResponse.body[index]).have.property('name');
+            expect(chaiHttpResponse.body[index]).have.property('totalPoints');
+            expect(chaiHttpResponse.body[index]).have.property('totalGames');
+            expect(chaiHttpResponse.body[index]).have.property('totalVictories');
+            expect(chaiHttpResponse.body[index]).have.property('totalDraws');
+            expect(chaiHttpResponse.body[index]).have.property('totalLosses');
+            expect(chaiHttpResponse.body[index]).have.property('goalsFavor');
+            expect(chaiHttpResponse.body[index]).have.property('goalsOwn');
+            expect(chaiHttpResponse.body[index]).have.property('goalsBalance');
+            expect(chaiHttpResponse.body[index]).have.property('efficiency');
+          });
+      });
+    });
+  });
+
+  describe('Testa a requisição da rota "/leaderboard"', () => {
+    describe('Testa se a requisição de LeaderBoard retorna a classificação dos times da casa', () => {
+      before(async () => {
+        sinon
+          .stub(Matches, "findAll")
+          .resolves(mockMatches as unknown as Matches[]);
+        sinon
+          .stub(Team, 'findAll')
+          .resolves(mockTeams as unknown as Team[])
+      });
+    
+      after(()=>{
+        (Matches.findAll as sinon.SinonStub).restore();
+        (Team.findAll as sinon.SinonStub).restore();
+      })
+    
+      it('Testa se leaderboard contem todas as proprioedades!', async () => {
+        chaiHttpResponse = await chai.request(app).get('/leaderboard')
           mockLeaderBoard.forEach((_m, index) => {
             expect(chaiHttpResponse.status).to.be.equal(200);
             expect(chaiHttpResponse.body[index]).have.property('name');
