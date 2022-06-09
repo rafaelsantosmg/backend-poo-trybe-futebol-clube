@@ -46,7 +46,6 @@ export default class Routers {
     );
     app.patch(
       '/matches/:id',
-      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.matches),
       (req, res) => this._matchesController.update(req, res),
     );
     app.get('/matches', (req, res) => this._matchesController.getAll(req, res));
@@ -54,7 +53,6 @@ export default class Routers {
       '/matches',
       (req, res, next) => this._validations.auth(req, res, next),
       (req, res, next) => this._validations.validateTeams(req, res, next),
-      (req, res, next) => this._validations.joi(req, res, next, this._joiSchemas.matches),
       (req, res) => this._matchesController.create(req, res),
     );
   }

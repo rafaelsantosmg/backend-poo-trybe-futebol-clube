@@ -20,13 +20,4 @@ export default class JoiSchemas {
       'string.empty': ANY_REQUIRED,
     }),
   });
-
-  matches = Joi.object({
-    user: Joi.object(),
-    homeTeam: Joi.number().min(1),
-    awayTeam: Joi.number().min(1),
-    homeTeamGoals: Joi.number().min(1),
-    awayTeamGoals: Joi.number().min(1),
-    inProgress: Joi.boolean(),
-  });
 }
