@@ -2,21 +2,25 @@
 # Trybe Futebol Clube
 
 Projeto de integração onde fomos provocados a criar todo "back-end" utilizando a biblioteca "express" com “TypeScript”, e colocando em prática os conhecimentos em POO e SOLID.
- 
+
 O projeto conta com um Front-End onde você pode listar uma tabela de times, fazer login para ter acesso como administrador e poder editar as partidas, e Tela de filtragem de dados!
- 
+
 Nossa função foi fazer a integração do front com o back-end e desenvolver testes TDD para construção do mesmo!
 
 ## Aprendizados
 
 O Maior desafio deste projeto foi construir o "setup" pois já tinha conhecimento do express apenas na utilização funcional, e para fazer ele com "Class" tive que fazer muitas buscas na internet recorrer a colegas de turma e monitorias, até que consegui achar um solução onde eu compreendesse sua manipulação e eu pudesse dar seguimento!
- 
-* Habilidades desenvolvidas nesse projeto foram: 
+
+* Habilidades desenvolvidas nesse projeto foram:
 * Comunicação, principalmente feedback e pedir ajuda!
 * Colaboração
 * Pensamento Crítico
 * Criatividade para resolver os problemas
 * Raciocínio Lógico.
+
+## Prévia
+
+![App Preview](assets/preview.gif)
 
 ## Instalação
 
